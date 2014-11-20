@@ -1,5 +1,6 @@
 package gameControls;
 
+import gameObjects.Base;
 import gameObjects.GameObject;
 
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.Input;
 
 public class Controller {
 	ArrayList<GameObject> drawableObjects; 
+	Base base;
+	private float deltaTime;
 	
 	private int screenHeight, screenWidth;
 	
@@ -20,6 +23,8 @@ public class Controller {
 		initAsteroids(10);
 		initSound();
 		*/
+		base = new Base();
+		drawableObjects.add(base);
 		screenHeight = Gdx.graphics.getHeight();
 	}
 	//Initialize the Alien ships to appear at start of screen
@@ -28,8 +33,15 @@ public class Controller {
 	}
 	
 	public void update(){
+		deltaTime = Gdx.graphics.getDeltaTime();
 		processMouseInput();
 		
+		for(int i=0; i<drawableObjects.size(); i++){
+			GameObject gObj = drawableObjects.get(i);
+			if(gObj instanceof Base){
+				((Base) gObj).update(deltaTime);
+			}
+		}
 		
 	}
 	
