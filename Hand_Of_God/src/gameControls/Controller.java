@@ -1,7 +1,10 @@
 package gameControls;
 
+import gameObjects.AlienShip;
 import gameObjects.Base;
 import gameObjects.GameObject;
+import gameObjects.RedFighter;
+import gameObjects.SmallFighter;
 
 import java.util.ArrayList;
 
@@ -24,15 +27,36 @@ public class Controller {
 		initSound();
 		*/
 		base = new Base();
-		drawableObjects.add(base);
+		//initAlienShips(1);
+		
+		//initRedFighter();
+		
+		initSmallFighter();
+		
+		//drawableObjects.add(base);
 		screenHeight = Gdx.graphics.getHeight();
 	}
 	//Initialize the Alien ships to appear at start of screen
-	private void initShips(int num){
-		
+	private void initAlienShips(int num){
+		for(int i=0;i<num;i++){
+			AlienShip alien = new AlienShip();
+			
+			drawableObjects.add(alien);
+		}
 	}
 	
+	private void initRedFighter(){
+		RedFighter red = new RedFighter();
+		drawableObjects.add(red);
+	}
+	
+	private void initSmallFighter(){
+		SmallFighter small = new SmallFighter();
+		drawableObjects.add(small);
+	}
 	public void update(){
+		//System.out.println("ArraySize= " + drawableObjects.size());
+		
 		deltaTime = Gdx.graphics.getDeltaTime();
 		processMouseInput();
 		
@@ -40,6 +64,15 @@ public class Controller {
 			GameObject gObj = drawableObjects.get(i);
 			if(gObj instanceof Base){
 				((Base) gObj).update(deltaTime);
+			}
+			if(gObj instanceof AlienShip){
+				((AlienShip) gObj).update(deltaTime);
+			}
+			if(gObj instanceof RedFighter){
+				((RedFighter) gObj).update(deltaTime);
+			}
+			if(gObj instanceof SmallFighter){
+				((SmallFighter) gObj).update(deltaTime);
 			}
 		}
 		

@@ -1,0 +1,67 @@
+alienBomb.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+aliendropping0001
+  rotate: false
+  xy: 635, 2
+  size: 76, 123
+  orig: 82, 141
+  offset: 4, 10
+  index: -1
+aliendropping0002
+  rotate: false
+  xy: 82, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 3, 10
+  index: -1
+aliendropping0003
+  rotate: false
+  xy: 2, 2
+  size: 78, 123
+  orig: 82, 141
+  offset: 2, 10
+  index: -1
+aliendropping0004
+  rotate: false
+  xy: 161, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 2, 10
+  index: -1
+aliendropping0005
+  rotate: false
+  xy: 240, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 2, 10
+  index: -1
+aliendropping0006
+  rotate: false
+  xy: 319, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 2, 10
+  index: -1
+aliendropping0007
+  rotate: false
+  xy: 398, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 2, 10
+  index: -1
+aliendropping0008
+  rotate: false
+  xy: 477, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 3, 10
+  index: -1
+aliendropping0009
+  rotate: false
+  xy: 556, 2
+  size: 77, 123
+  orig: 82, 141
+  offset: 3, 10
+  index: -1

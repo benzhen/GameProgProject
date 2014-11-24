@@ -1,13 +1,14 @@
 package gameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Array;
 
-public abstract class GameObject {
+public abstract class AniGameObject {
 	private boolean drawable;
 	private boolean updatable;
-	public Sprite sprite;
+	public Array<Sprite> aniSprite;
 	
-	public GameObject(){
+	public AniGameObject(){
 	}
 	
 	public boolean isDrawable(){
@@ -22,4 +23,5 @@ public abstract class GameObject {
 	public void setIsUpdatable(boolean val){
 		updatable = val;
 	}
+
 }

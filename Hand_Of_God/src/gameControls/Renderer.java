@@ -15,8 +15,6 @@ public class Renderer {
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
 		
-		
-		
 	}
 	
 	public void render(){
