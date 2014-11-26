@@ -58,11 +58,14 @@ public class SmallFighter extends GameObject implements Updatable{
 		vec.nor();
 		vec.scl(Constants.SMALLFIGHTER_SPEED);
 		
+		//sprite.setRotation(vec.angle());
 	}
 	
 	@Override
 	public void update(float deltaTime){
 		sprite.translate(vec.x * deltaTime, vec.y * deltaTime);
+		
+		//System.out.println("SmallFighter:"+ " Hit= " + hit + ", remove= " + remove);
 	}
 	
 	public void addHit(){

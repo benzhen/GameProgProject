@@ -3,7 +3,12 @@ package gameControls;
 public class Constants {
 	public final static int SHIP_SIZE = 80;
 	
-	public final static int BARRIER_SIZE = 40;
+	public final static String BARRIER_TOP = "TOP";
+	public final static String BARRIER_BOTTOM = "BOTTOM";
+	public final static String BARRIER_LEFT = "LEFT";
+	public final static String BARRIER_RIGHT = "RIGHT";
+	public final static int BARRIER_WIDTH = 120;
+	public final static int BARRIER_HEIGHT = 10;
 	
 	public final static int ALIENSHIP_SIZE = 32;
 	public final static int ALIENSHIP_SPEED = 20;

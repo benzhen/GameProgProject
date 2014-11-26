@@ -1,6 +1,7 @@
 package gameControls;
 
 import gameObjects.AlienShip;
+import gameObjects.Barriers;
 import gameObjects.Base;
 import gameObjects.GameObject;
 import gameObjects.RedFighter;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.Input;
 
 public class Controller {
 	ArrayList<GameObject> drawableObjects; 
-	Base base;
+	
 	private float deltaTime;
 	
 	private int screenHeight, screenWidth;
@@ -26,15 +27,21 @@ public class Controller {
 		initAsteroids(10);
 		initSound();
 		*/
-		base = new Base();
-		//initAlienShips(1);
+		initBase();
 		
-		//initRedFighter();
+		initBarriers();
+		
+		initAlienShips(1);
+		
+		initRedFighter();
 		
 		initSmallFighter();
 		
-		//drawableObjects.add(base);
 		screenHeight = Gdx.graphics.getHeight();
+	}
+	private void initBase(){
+		Base base = new Base();
+		drawableObjects.add(base);
 	}
 	//Initialize the Alien ships to appear at start of screen
 	private void initAlienShips(int num){
@@ -53,6 +60,17 @@ public class Controller {
 	private void initSmallFighter(){
 		SmallFighter small = new SmallFighter();
 		drawableObjects.add(small);
+	}
+	private void initBarriers(){
+		Barriers topB = new Barriers(Constants.BARRIER_TOP);
+		Barriers bottomB = new Barriers(Constants.BARRIER_BOTTOM);
+		Barriers leftB = new Barriers(Constants.BARRIER_LEFT);
+		Barriers rightB = new Barriers(Constants.BARRIER_RIGHT);
+		
+		drawableObjects.add(topB);
+		drawableObjects.add(bottomB);
+		drawableObjects.add(leftB);
+		drawableObjects.add(rightB);
 	}
 	public void update(){
 		//System.out.println("ArraySize= " + drawableObjects.size());
@@ -74,7 +92,16 @@ public class Controller {
 			if(gObj instanceof SmallFighter){
 				((SmallFighter) gObj).update(deltaTime);
 			}
+			if(gObj instanceof Barriers){
+				((Barriers) gObj).update(deltaTime);
+				
+				if(((Barriers) gObj).getRemove()){
+					drawableObjects.remove(i);
+				}
+			}
 		}
+		
+		
 		
 	}
 	
@@ -85,7 +112,17 @@ public class Controller {
 	//Process left mouse clicks
 	private void processMouseInput(){
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-		
+			
+		}
+	
+			
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_UP)){
+			for(int i=0; i<drawableObjects.size(); i++){
+				GameObject gObj = drawableObjects.get(i);
+				if(gObj instanceof Barriers){
+					((Barriers) gObj).addHit();
+				}
+			}
 		}
 	}
 	

@@ -57,11 +57,15 @@ public class RedFighter extends GameObject implements Updatable {
 		vec = new Vector2(screenWidth/2 - xPos, screenHeight/2 - yPos);
 		vec.nor();
 		vec.scl(Constants.REDFIGHTER_SPEED);
+		
+		//sprite.rotate(Math.abs(vec.angle()));
 	}
 	
 	@Override
 	public void update(float deltaTime){
 		sprite.translate(vec.x * deltaTime, vec.y * deltaTime);
+		
+		//System.out.println("RedFighter:"+ " Hit= " + hit + ", remove= " + remove);
 	}
 	
 	public void addHit(){

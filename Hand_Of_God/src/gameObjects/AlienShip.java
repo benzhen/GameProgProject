@@ -93,6 +93,8 @@ public class AlienShip extends GameObject implements Updatable {
 		
 		sprite.translate(vec.x * deltaTime, vec.y * deltaTime);
 		
+		//System.out.println("AlienShip:"+ " Hit= " + hit + ", remove= " + remove);
+		
 		//System.out.println("Positions: " + sprite.getX() + ", " + sprite.getY());
 		
 		/*
