@@ -4,7 +4,6 @@ import gameControls.Constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -58,7 +57,11 @@ public class SmallFighter extends GameObject implements Updatable{
 		vec.nor();
 		vec.scl(Constants.SMALLFIGHTER_SPEED);
 		
-		//sprite.setRotation(vec.angle());
+		//System.out.println("Before: " + "SpriteAngle= " + sprite.getRotation() + ", vecAngle= " + vec.angle());
+		
+		sprite.rotate(vec.angle() + 270);
+		
+		//System.out.println("After: " + "SpriteAngle= " + sprite.getRotation() + ", vecAngle= " + vec.angle());
 	}
 	
 	@Override

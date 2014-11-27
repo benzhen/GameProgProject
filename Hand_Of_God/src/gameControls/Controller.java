@@ -21,6 +21,8 @@ public class Controller {
 	
 	public Controller(){
 		drawableObjects = new ArrayList<GameObject>(); 
+		screenHeight = Gdx.graphics.getHeight();
+		screenWidth = Gdx.graphics.getWidth();
 		/* Old code from Asteroids game for initialization
 		 * 
 		initShip();
@@ -31,13 +33,13 @@ public class Controller {
 		
 		initBarriers();
 		
-		initAlienShips(1);
+		initAlienShips(5);
 		
-		initRedFighter();
+		//initRedFighter();
 		
-		initSmallFighter();
+		//initSmallFighter();
 		
-		screenHeight = Gdx.graphics.getHeight();
+		
 	}
 	private void initBase(){
 		Base base = new Base();

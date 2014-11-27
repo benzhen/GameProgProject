@@ -6,7 +6,6 @@ import gameControls.Constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -15,7 +14,7 @@ public class Barriers extends GameObject implements Updatable {
 	private TextureAtlas atlas;
 	private int screenHeight, screenWidth;
 	
-	private float state, xPos, yPos;
+	private float xPos, yPos;
 	private boolean remove = false;
 	private int hit=0;
 	

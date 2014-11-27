@@ -83,6 +83,12 @@ public class AlienShip extends GameObject implements Updatable {
 		vec = new Vector2(screenWidth/2 - xPos, screenHeight/2 - yPos);
 		vec.nor();
 		vec.scl(Constants.ALIENSHIP_SPEED);
+		
+		//System.out.println("Before: " + "SpriteAngle= " + sprite.getRotation() + ", vecAngle= " + vec.angle());
+		
+		sprite.rotate(vec.angle() + 270);
+				
+		//System.out.println("After: " + "SpriteAngle= " + sprite.getRotation() + ", vecAngle= " + vec.angle());
 	}
 	
 	@Override
