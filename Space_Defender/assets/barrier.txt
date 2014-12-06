@@ -1,0 +1,32 @@
+barrier.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glowtube
+  rotate: false
+  xy: 2, 2
+  size: 238, 63
+  orig: 268, 107
+  offset: 13, 22
+  index: -1
+glowtube2
+  rotate: false
+  xy: 242, 2
+  size: 238, 63
+  orig: 268, 107
+  offset: 13, 22
+  index: -1
+left_hbar
+  rotate: true
+  xy: 2, 67
+  size: 38, 148
+  orig: 40, 150
+  offset: 0, 1
+  index: -1
+right_hbar
+  rotate: true
+  xy: 152, 67
+  size: 38, 148
+  orig: 40, 150
+  offset: 2, 1
+  index: -1
