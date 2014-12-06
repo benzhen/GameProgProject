@@ -20,7 +20,7 @@ import gameObjects.SmallFighter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-public class Controller implements InputProcessor {
+public class Controller {
 	ArrayList<GameObject> drawableObjects; 
 	private Sound explode, laser, ufo;
 	private float deltaTime;
@@ -114,29 +114,30 @@ public class Controller implements InputProcessor {
 			}
 		}
 		
-		
+		score = score.add(new BigInteger("3"));
 		
 	}
-	
+	public BigInteger getScore()
+	{
+		return score;
+	}
 	public ArrayList<GameObject> getDrawableObjects(){
 		return drawableObjects;
 	}
 	
 	//Process left mouse clicks
-	private void processMouseInput() {
+	private void processMouseInput(){
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-			  for (int i = 0; i < this.drawableObjects.size(); i++)
-			  {
-				GameObject gObj = drawableObjects.get(i);
-				if (gObj instanceof AlienShip)
-				{
-				  Rectangle bounds = gObj.sprite.getBoundingRectangle();
-				  explode.play(1.0f);
-				}
-			  }
+		  for (int i = 0; i < this.drawableObjects.size(); i++)
+		  {
+			GameObject gObj = drawableObjects.get(i);
+			if (gObj instanceof AlienShip)
+			{
+			  Rectangle bounds = gObj.sprite.getBoundingRectangle();
+			  explode.play(1.0f);
 			}
+		  }
 		}
-	
 			
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_UP)){
 			for(int i=0; i<drawableObjects.size(); i++){
@@ -147,7 +148,6 @@ public class Controller implements InputProcessor {
 			}
 		}
 	}
-	
 	private void initSound(){
 		explode = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
 		laser = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
