@@ -143,13 +143,8 @@ public class Controller {
 					drawableObjects.remove((AlienShip) gObj);	//If sprite is clicked then remove the object
 				}
 				//Check if Alien ship hit the base.
-<<<<<<< HEAD
 				if(base.sprite.getBoundingRectangle().overlaps(((AlienShip) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
-=======
-				if(base.sprite.getBoundingRectangle().overlaps((AlienShip) gObj)
-						.sprite.getBoundingRectangle() && BaseHit != true){
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 					BaseHit = true;
 				}
 				
@@ -162,13 +157,8 @@ public class Controller {
 					drawableObjects.remove((RedFighter) gObj);	//If sprite is clicked then remove the object
 				}
 				//Check if Alien ship hit the base.
-<<<<<<< HEAD
 				if(base.sprite.getBoundingRectangle().overlaps(((RedFighter) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
-=======
-				if(base.sprite.getBoundingRectangle().overlaps((RedFighter) gObj)
-						.sprite.getBoundingRectangle() && BaseHit != true){
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 					BaseHit = true;
 				}
 				
@@ -180,49 +170,22 @@ public class Controller {
 					drawableObjects.remove((SmallFighter) gObj);	//If sprite is clicked then remove the object
 				}
 				//Check if Alien shp hit the base.
-<<<<<<< HEAD
 				if(base.sprite.getBoundingRectangle().overlaps(((SmallFighter) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
-=======
-				if(base.sprite.getBoundingRectangle().overlaps((SmallFighter) gObj)
-						.sprite.getBoundingRectangle() && BaseHit != true){
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 					BaseHit = true;
 				}
 				
 			}
 			
-<<<<<<< HEAD
 		}
 		
 		for(int i=0; i<drawableObjects.size();i++){
 			GameObject gObj = drawableObjects.get(i);
 			
-=======
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 			//Checks if ship hits them, if they do then destroy the ship
 			//and remove one hit point from the barriers.
 			if(gObj instanceof Barriers){
 				((Barriers) gObj).update(deltaTime);
-				if((gObj.sprite.getBoundingRectangle().overlaps((AlienShip) gObj)
-						.sprite.getBoundingRectangle())){
-						
-					drawableObjects.remove((AlienShip) gObj);
-					((Barriers) gObj).addHit();
-				}
-				
-				if((gObj.sprite.getBoundingRectangle().overlaps((SmallFighter) gObj)
-						.sprite.getBoundingRectangle())){
-					drawableObjects.remove((SmallFighter) gObj);
-					((Barriers) gObj).addHit();
-				}
-				
-				
-				if((gObj.sprite.getBoundingRectangle().overlaps((RedFighter) gObj)
-						.sprite.getBoundingRectangle())){
-					drawableObjects.remove((RedFighter) gObj);
-					((Barriers) gObj).addHit();
-				}
 				
 				if(((Barriers) gObj).getRemove()){
 					drawableObjects.remove(i);
@@ -276,12 +239,8 @@ public class Controller {
 		  int PosX = Gdx.input.getX(); //Polls mouse for input of X value
 		  int PosY = Gdx.input.getY();	//Polls mouse for input of Y value.
 		  
-<<<<<<< HEAD
 		  setMouseXY(PosX, PosY);		//Set X and Y
 		  
-=======
-		  setMouseXY(PosX, Posy);		//Set X and Y
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 		  /**
 		  for (int i = 0; i < this.drawableObjects.size(); i++)
 		  {
@@ -298,11 +257,8 @@ public class Controller {
 			
 		**/
 		  
-<<<<<<< HEAD
 		}
 		  
-=======
->>>>>>> 46498e128ce9ce7567e09b5a3f76de606b13da96
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_UP)){
 			for(int i=0; i<drawableObjects.size(); i++){
 				GameObject gObj = drawableObjects.get(i);
