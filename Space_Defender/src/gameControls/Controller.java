@@ -55,9 +55,9 @@ public class Controller {
 		
 		initAlienShips(5);
 		
-		//initRedFighter();
+		initRedFighter();
 		
-		//initSmallFighter();
+		initSmallFighter();
 		
 		
 	}
@@ -106,11 +106,13 @@ public class Controller {
 		waitSmall += deltaTime;
 		waitRed += deltaTime;
 		
+		
 		//Spawn 2 Alien ships after 4 seconds.
 		if(waitAlien >= 4){
 			initAlienShips(2);
 			waitAlien = 0;
 		}
+		
 		
 		//Spawn a small fighter every 7 seconds.
 		if(waitSmall >= 7){
@@ -195,6 +197,10 @@ public class Controller {
 					GameObject gObj2 = drawableObjects.get(j);
 					
 					if(gObj2 instanceof AlienShip){
+						if(gObj2.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+							drawableObjects.remove((AlienShip) gObj2);
+						}
+						
 						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
 							drawableObjects.remove((AlienShip) gObj2);
 							((Barriers) gObj).addHit();
@@ -202,6 +208,10 @@ public class Controller {
 					}
 					
 					if(gObj2 instanceof SmallFighter){
+						if(gObj2.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+							drawableObjects.remove((SmallFighter) gObj2);
+						}
+						
 						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
 							drawableObjects.remove((SmallFighter) gObj2);
 							((Barriers) gObj).addHit();
