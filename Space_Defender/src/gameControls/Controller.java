@@ -281,6 +281,18 @@ public class Controller {
 				}
 			}
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_DOWN)){
+			initRedFighter();
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_RIGHT)){
+			initSmallFighter();
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_LEFT)){
+			initAlienShips(1);
+		}
 	}
 	private void initSound(){
 		explode = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
