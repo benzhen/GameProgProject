@@ -135,7 +135,7 @@ public class Controller {
 		waitSmall += deltaTime;
 		waitRed += deltaTime;
 		
-		
+		if(BaseHit == false){
 		//Spawn 2 Alien ships after 4 seconds.
 		if(waitAlien >= 4){
 			initAlienShips(2);
@@ -152,6 +152,7 @@ public class Controller {
 		if(waitRed >= 10){
 			initRedFighter();
 			waitRed = 0;
+		}
 		}
 		
 		//Spawn a red fighter every 10 seconds.
