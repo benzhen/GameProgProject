@@ -76,11 +76,15 @@ public class Controller {
 	
 	private void initRedFighter(){
 		RedFighter red = new RedFighter();
+		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
+		s.play();
 		drawableObjects.add(red);
 	}
 	
 	private void initSmallFighter(){
 		SmallFighter small = new SmallFighter();
+		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
+		s.play();
 		drawableObjects.add(small);
 	}
 	private void initBarriers(){
