@@ -287,8 +287,8 @@ public class Controller {
 		  float PosX = Gdx.input.getX(); 	//Polls mouse for input of X value
 		  float PosY = Gdx.input.getY();	//Polls mouse for input of Y value.
 		  setMouseXY(PosX,screenHeight - PosY);
-		  System.out.println("X: " + PosX + ", Y: " + PosY);
-		  initClickCheck(PosX, PosY);
+		  //System.out.println("X: " + PosX + ", Y: " + PosY);
+		  //initClickCheck(PosX, PosY);
  
 		}
 		
