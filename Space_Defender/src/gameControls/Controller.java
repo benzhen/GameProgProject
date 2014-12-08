@@ -83,11 +83,15 @@ public class Controller {
 	
 	private void initRedFighter(){
 		RedFighter red = new RedFighter();
+		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
+		s.play();
 		drawableObjects.add(red);
 	}
 	
 	private void initSmallFighter(){
 		SmallFighter small = new SmallFighter();
+		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
+		s.play();
 		drawableObjects.add(small);
 	}
 	private void initBarriers(){
@@ -265,6 +269,18 @@ public class Controller {
 		  float PosY = Gdx.input.getY() - screenHeight;	//Polls mouse for input of Y value.
 		  setMouseXY(PosX, PosY);		//Set X and Y
  
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_DOWN)){
+			initRedFighter();
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_RIGHT)){
+			initSmallFighter();
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_LEFT)){
+			initAlienShips(1);
 		}
 	}
 		
