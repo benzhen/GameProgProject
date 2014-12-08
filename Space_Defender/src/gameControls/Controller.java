@@ -5,7 +5,11 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.InputProcessor;
+import gameObjects.ClickCheck;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,8 +28,6 @@ import gameObjects.SmallFighter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class Controller {
 	ArrayList<GameObject> drawableObjects; 
@@ -68,6 +70,23 @@ public class Controller {
 		
 		
 	}
+	
+	private void initClickCheck(float posX, float posY){
+		    //Add a comment to this line
+			int w = 1; 
+			int h = 1; 
+			Pixmap pmap = new Pixmap(w, h, Format.RGBA8888); // TODO: Check Image Format
+			//Add a comment to this line
+			pmap.setColor(1, 1, 1, 1);
+			pmap.drawLine(0, h, w/2, 0);
+			pmap.drawLine(w, h, w/2, 0);
+			pmap.drawLine(1, h-1, w, h-1);
+			ClickCheck check = new ClickCheck(new Texture(pmap), posX, posY);
+			drawableObjects.add(check);
+	}
+	
+	
+	
 	private void initBase(){
 		Base base = new Base();
 		drawableObjects.add(base);
@@ -266,8 +285,10 @@ public class Controller {
 	private void processMouseInput(){
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 		  float PosX = Gdx.input.getX(); 	//Polls mouse for input of X value
-		  float PosY = Gdx.input.getY() - screenHeight;	//Polls mouse for input of Y value.
-		  setMouseXY(PosX, PosY);		//Set X and Y
+		  float PosY = Gdx.input.getY();	//Polls mouse for input of Y value.
+		  setMouseXY(PosX,screenHeight - PosY);
+		  System.out.println("X: " + PosX + ", Y: " + PosY);
+		  initClickCheck(PosX, PosY);
  
 		}
 		
