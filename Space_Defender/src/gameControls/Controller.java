@@ -7,8 +7,12 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import gameObjects.AlienShip;
 import gameObjects.Barriers;
@@ -20,6 +24,9 @@ import gameObjects.SmallFighter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 public class Controller {
 	ArrayList<GameObject> drawableObjects; 
 	private Sound explode, laser, ufo;
@@ -28,14 +35,14 @@ public class Controller {
 	private int screenHeight, screenWidth;
 	private BigInteger score;
 	
-	private int x;
-	private int y;
+	private float x;
+	private float y;
 	
 	Base base = new Base();
 	private Boolean BaseHit = false;	//Boolean checks if base was hit by a ship
-	private int waitAlien = 0;
-	private int waitRed = 0;
-	private int waitSmall = 0;
+	private float waitAlien = 0;
+	private float waitRed = 0;
+	private float waitSmall = 0;
 	  
 	public Controller(){
 		drawableObjects = new ArrayList<GameObject>(); 
@@ -101,7 +108,6 @@ public class Controller {
 		processMouseInput();
 		
 		
-		
 		waitAlien += deltaTime;
 		waitSmall += deltaTime;
 		waitRed += deltaTime;
@@ -120,11 +126,12 @@ public class Controller {
 			waitSmall = 0;
 		}
 		
-		//Spawn a red fighter every 10 seconds.
 		if(waitRed >= 10){
 			initRedFighter();
 			waitRed = 0;
 		}
+		
+		//Spawn a red fighter every 10 seconds.
 		
 		
 		for(int i=0; i<drawableObjects.size(); i++){
@@ -132,33 +139,35 @@ public class Controller {
 			GameObject gObj = drawableObjects.get(i);
 			if(gObj instanceof Base){
 				((Base) gObj).update(deltaTime);
-				if(BaseHit = true){
+				if(BaseHit == true){
+					drawableObjects.remove((Base) gObj);
 					explode.play(1.0f);		//Game over if base is hit
+
 				}
 			}
-			
+			if(BaseHit == false){
 			if(gObj instanceof AlienShip){
 				((AlienShip) gObj).update(deltaTime);
-				//If current ship contains mouse X and Y, then explode
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseX())){
-					explode.play(1.0f);
-					drawableObjects.remove((AlienShip) gObj);	//If sprite is clicked then remove the object
+				
+				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+					drawableObjects.remove((AlienShip) gObj);
 				}
-				//Check if Alien ship hit the base.
+				
 				if(base.sprite.getBoundingRectangle().overlaps(((AlienShip) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
 					BaseHit = true;
 				}
 				
-				
 			}
+			
 			if(gObj instanceof RedFighter){
 				((RedFighter) gObj).update(deltaTime);
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseX())){
-					explode.play(1.0f);
-					drawableObjects.remove((RedFighter) gObj);	//If sprite is clicked then remove the object
+
+				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+					drawableObjects.remove((RedFighter) gObj);
 				}
-				//Check if Alien ship hit the base.
+				
+				
 				if(base.sprite.getBoundingRectangle().overlaps(((RedFighter) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
 					BaseHit = true;
@@ -167,19 +176,29 @@ public class Controller {
 			}
 			if(gObj instanceof SmallFighter){
 				((SmallFighter) gObj).update(deltaTime);
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseX())){
-					explode.play(1.0f);
-					drawableObjects.remove((SmallFighter) gObj);	//If sprite is clicked then remove the object
+				
+				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+					drawableObjects.remove((SmallFighter) gObj);
 				}
+				
+				
 				//Check if Alien shp hit the base.
 				if(base.sprite.getBoundingRectangle().overlaps(((SmallFighter) gObj)
 						.sprite.getBoundingRectangle()) && BaseHit != true){
 					BaseHit = true;
 				}
-				
-			}
 			
+				
+				
+				
 		}
+		}
+
+				
+			
+		
+		}
+		
 		
 		for(int i=0; i<drawableObjects.size();i++){
 			GameObject gObj = drawableObjects.get(i);
@@ -197,9 +216,6 @@ public class Controller {
 					GameObject gObj2 = drawableObjects.get(j);
 					
 					if(gObj2 instanceof AlienShip){
-						if(gObj2.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
-							drawableObjects.remove((AlienShip) gObj2);
-						}
 						
 						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
 							drawableObjects.remove((AlienShip) gObj2);
@@ -208,9 +224,6 @@ public class Controller {
 					}
 					
 					if(gObj2 instanceof SmallFighter){
-						if(gObj2.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
-							drawableObjects.remove((SmallFighter) gObj2);
-						}
 						
 						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
 							drawableObjects.remove((SmallFighter) gObj2);
@@ -232,9 +245,11 @@ public class Controller {
 			
 		}
 		
-		score = score.add(new BigInteger("3"));
-		
+		if(BaseHit == false){
+			score = score.add(new BigInteger("3"));
+		}
 	}
+	
 	public BigInteger getScore()
 	{
 		return score;
@@ -246,38 +261,13 @@ public class Controller {
 	//Process left mouse clicks
 	private void processMouseInput(){
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-		  int PosX = Gdx.input.getX(); //Polls mouse for input of X value
-		  int PosY = Gdx.input.getY();	//Polls mouse for input of Y value.
-		  
+		  float PosX = Gdx.input.getX(); 	//Polls mouse for input of X value
+		  float PosY = Gdx.input.getY() - screenHeight;	//Polls mouse for input of Y value.
 		  setMouseXY(PosX, PosY);		//Set X and Y
-		  
-		  /**
-		  for (int i = 0; i < this.drawableObjects.size(); i++)
-		  {
-			GameObject gObj = drawableObjects.get(i);
-			
-			if (gObj instanceof AlienShip)
-			{
-			  //Idea is that whenever mouse is clicked and its position is in rectangle, delete selected sprite
-			  //java.awt.Rectangle bounds = gObj.sprite.getBoundingRectangle();
-			  //explode.play(1.0f);
-			}
-		  }
-		}
-			
-		**/
-		  
-		}
-		  
-		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_UP)){
-			for(int i=0; i<drawableObjects.size(); i++){
-				GameObject gObj = drawableObjects.get(i);
-				if(gObj instanceof Barriers){
-					((Barriers) gObj).addHit();
-				}
-			}
+ 
 		}
 	}
+		
 	private void initSound(){
 		explode = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
 		laser = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
@@ -296,7 +286,7 @@ public class Controller {
 		}
 	}
 	
-	public void setMouseXY(int x, int y){
+	public void setMouseXY(float x, float y){
 		this.x = x;
 		this.y = y;
 	}
