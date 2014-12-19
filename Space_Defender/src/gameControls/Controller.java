@@ -39,6 +39,7 @@ public class Controller {
 	
 	private float x;
 	private float y;
+	boolean paused = false;
 	
 	Base base = new Base();
 	private Boolean BaseHit = false;	//Boolean checks if base was hit by a ship
@@ -130,147 +131,163 @@ public class Controller {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		processMouseInput();
 		
-		
-		waitAlien += deltaTime;
-		waitSmall += deltaTime;
-		waitRed += deltaTime;
-		
-		if(BaseHit == false){
-		//Spawn 2 Alien ships after 4 seconds.
-		if(waitAlien >= 4){
-			initAlienShips(2);
-			waitAlien = 0;
-		}
-		
-		
-		//Spawn a small fighter every 7 seconds.
-		if(waitSmall >= 7){
-			initSmallFighter();
-			waitSmall = 0;
-		}
-		
-		if(waitRed >= 10){
-			initRedFighter();
-			waitRed = 0;
-		}
-		}
-		
-		//Spawn a red fighter every 10 seconds.
-		
-		
-		for(int i=0; i<drawableObjects.size(); i++){
+		if(!paused){
+			waitAlien += deltaTime;
+			waitSmall += deltaTime;
+			waitRed += deltaTime;
 			
-			GameObject gObj = drawableObjects.get(i);
-			if(gObj instanceof Base){
-				((Base) gObj).update(deltaTime);
-				if(BaseHit == true){
-					drawableObjects.remove((Base) gObj);
-					explode.play(1.0f);		//Game over if base is hit
-
-				}
-			}
 			if(BaseHit == false){
-			if(gObj instanceof AlienShip){
-				((AlienShip) gObj).update(deltaTime);
-				
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
-					drawableObjects.remove((AlienShip) gObj);
+				//Spawn 2 Alien ships after 4 seconds.
+				if(waitAlien >= 4){
+					initAlienShips(2);
+					waitAlien = 0;
 				}
 				
-				if(base.sprite.getBoundingRectangle().overlaps(((AlienShip) gObj)
-						.sprite.getBoundingRectangle()) && BaseHit != true){
-					BaseHit = true;
-				}
 				
+				//Spawn a small fighter every 7 seconds.
+				if(waitSmall >= 7){
+					initSmallFighter();
+					waitSmall = 0;
+				}
+				//Spawn a red fighter every 10 seconds.
+				if(waitRed >= 10){
+					initRedFighter();
+					waitRed = 0;
+				}
 			}
 			
-			if(gObj instanceof RedFighter){
-				((RedFighter) gObj).update(deltaTime);
-
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
-					drawableObjects.remove((RedFighter) gObj);
-				}
-				
-				
-				if(base.sprite.getBoundingRectangle().overlaps(((RedFighter) gObj)
-						.sprite.getBoundingRectangle()) && BaseHit != true){
-					BaseHit = true;
-				}
-				
-			}
-			if(gObj instanceof SmallFighter){
-				((SmallFighter) gObj).update(deltaTime);
-				
-				if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
-					drawableObjects.remove((SmallFighter) gObj);
-				}
-				
-				
-				//Check if Alien shp hit the base.
-				if(base.sprite.getBoundingRectangle().overlaps(((SmallFighter) gObj)
-						.sprite.getBoundingRectangle()) && BaseHit != true){
-					BaseHit = true;
-				}
 			
-				
-				
-				
-		}
-		}
-
-				
 			
-		
-		}
-		
-		
-		for(int i=0; i<drawableObjects.size();i++){
-			GameObject gObj = drawableObjects.get(i);
-			
-			//Checks if ship hits them, if they do then destroy the ship
-			//and remove one hit point from the barriers.
-			if(gObj instanceof Barriers){
-				((Barriers) gObj).update(deltaTime);
+			//adding hits to ships and checking if base has been hit
+			for(int i=0; i<drawableObjects.size(); i++){
 				
-				if(((Barriers) gObj).getRemove()){
-					drawableObjects.remove(i);
+				GameObject gObj = drawableObjects.get(i);
+				if(gObj instanceof Base){
+					((Base) gObj).update(deltaTime);
+					if(BaseHit == true){
+						drawableObjects.remove((Base) gObj);
+						explode.play(1.0f);		//Game over if base is hit
+	
+					}
 				}
-				
-				for(int j=0;j<drawableObjects.size();j++){
-					GameObject gObj2 = drawableObjects.get(j);
-					
-					if(gObj2 instanceof AlienShip){
+				if(BaseHit == false){
+					if(gObj instanceof AlienShip){
+						((AlienShip) gObj).update(deltaTime);
 						
-						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
-							drawableObjects.remove((AlienShip) gObj2);
-							((Barriers) gObj).addHit();
+						if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+							((AlienShip) gObj).addHit();
 						}
-					}
-					
-					if(gObj2 instanceof SmallFighter){
 						
-						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
-							drawableObjects.remove((SmallFighter) gObj2);
-							((Barriers) gObj).addHit();
+						if(base.sprite.getBoundingRectangle().overlaps(((AlienShip) gObj)
+								.sprite.getBoundingRectangle()) && BaseHit != true){
+							BaseHit = true;
+						}
+						
+					}
+					
+					if(gObj instanceof RedFighter){
+						((RedFighter) gObj).update(deltaTime);
+		
+						if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+							((RedFighter) gObj).addHit();
+						}
+						
+						
+						if(base.sprite.getBoundingRectangle().overlaps(((RedFighter) gObj)
+								.sprite.getBoundingRectangle()) && BaseHit != true){
+							BaseHit = true;
+						}
+						
+					}
+					if(gObj instanceof SmallFighter){
+						((SmallFighter) gObj).update(deltaTime);
+						
+						if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
+							((SmallFighter) gObj).addHit();
+						}
+						
+						
+						//Check if Alien shp hit the base.
+						if(base.sprite.getBoundingRectangle().overlaps(((SmallFighter) gObj)
+								.sprite.getBoundingRectangle()) && BaseHit != true){
+							BaseHit = true;
+						}
+					}
+				}
+			}
+			
+			if(!BaseHit){
+				//This is removing the ships after they have taken the appropriate amount of hits and add score
+				for(int i=0;i<drawableObjects.size();i++){
+					GameObject gObj = drawableObjects.get(i);
+					
+					if(gObj instanceof AlienShip){
+						if(((AlienShip) gObj).getRemove()){
+							drawableObjects.remove(i);
+							score = score.add(new BigInteger("10"));
 						}
 					}
 					
-					if(gObj2 instanceof RedFighter){
-						if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
-							drawableObjects.remove((RedFighter) gObj2);
-							((Barriers) gObj).addHit();
+					if(gObj instanceof SmallFighter){
+						if(((SmallFighter) gObj).getRemove()){
+							drawableObjects.remove(i);
+							score = score.add(new BigInteger("20"));
 						}
 					}
 					
+					if(gObj instanceof RedFighter){
+						if(((RedFighter) gObj).getRemove()){
+							drawableObjects.remove(i);
+							score = score.add(new BigInteger("30"));
+						}
+					}
+				}
+			}
+			
+			//This is barriers logic
+			for(int i=0; i<drawableObjects.size();i++){
+				GameObject gObj = drawableObjects.get(i);
+				
+				//Checks if ship hits them, if they do then destroy the ship
+				//and remove one hit point from the barriers.
+				if(gObj instanceof Barriers){
+					((Barriers) gObj).update(deltaTime);
+					
+					if(((Barriers) gObj).getRemove()){
+						drawableObjects.remove(i);
+					}
+					
+					for(int j=0;j<drawableObjects.size();j++){
+						GameObject gObj2 = drawableObjects.get(j);
+						
+						if(gObj2 instanceof AlienShip){
+							
+							if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
+								drawableObjects.remove((AlienShip) gObj2);
+								((Barriers) gObj).addHit();
+							}
+						}
+						
+						if(gObj2 instanceof SmallFighter){
+							
+							if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
+								drawableObjects.remove((SmallFighter) gObj2);
+								((Barriers) gObj).addHit();
+							}
+						}
+						
+						if(gObj2 instanceof RedFighter){
+							if(gObj2.sprite.getBoundingRectangle().overlaps( ((Barriers) gObj).sprite.getBoundingRectangle()) ){
+								drawableObjects.remove((RedFighter) gObj2);
+								((Barriers) gObj).addHit();
+							}
+						}
+					}
 					
 				}
 				
 			}
 			
-		}
-		
-		if(BaseHit == false){
-			score = score.add(new BigInteger("3"));
 		}
 	}
 	
@@ -293,6 +310,9 @@ public class Controller {
  
 		}
 		
+		/*
+		 
+		//Automatically spawn ships for debugging purposes 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_DOWN)){
 			initRedFighter();
 		}
@@ -303,6 +323,17 @@ public class Controller {
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DPAD_LEFT)){
 			initAlienShips(1);
+		}
+		*/
+		
+		//pause button
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+			if(paused){
+				paused = false;
+			}
+			else{
+				paused = true;
+			}
 		}
 	}
 		

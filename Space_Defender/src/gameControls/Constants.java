@@ -12,11 +12,14 @@ public class Constants {
 	
 	public final static int ALIENSHIP_SIZE = 32;
 	public final static int ALIENSHIP_SPEED = 20;
+	public final static long ALIENSHIP_SCORE = 10;
 	
 	public final static int REDFIGHTER_SIZE = 50;
 	public final static int REDFIGHTER_SPEED = 10;
+	public final static long REDFIGHTER_SCORE = 30;
 	
 	public final static int SMALLFIGHTER_WIDTH = 30;
 	public final static int SMALLFIGHTER_HEIGHT = 60;
 	public final static int SMALLFIGHTER_SPEED = 30;
+	public final static long SMALLFIGHTER_SCORE = 20;
 }

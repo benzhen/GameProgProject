@@ -2,6 +2,7 @@ package gameControls;
 
 import gameObjects.GameObject;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -9,12 +10,14 @@ public class Renderer {
 	private SpriteBatch spriteBatch;
 	private Controller control;
 	BitmapFont font;
+	Texture bg1;
 	
 	public Renderer(Controller c){
 		control = c;
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
 		
+		bg1 = new Texture("background.jpg");
 	}
 	
 	public void render(){
@@ -31,6 +34,6 @@ public class Renderer {
 	}
 	
 	public void renderBackground(){
-		
+		spriteBatch.draw(bg1, 0, 0);
 	}
 }
