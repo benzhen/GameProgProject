@@ -9,7 +9,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.InputProcessor;
+
 import gameObjects.ClickCheck;
+
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,7 +34,8 @@ import java.util.ArrayList;
 
 public class Controller {
 	ArrayList<GameObject> drawableObjects; 
-	private Sound explode, laser, ufo;
+	private Music backgroundRadiation;
+	private Sound explode, laser, ufo, redSummonSound, smallSummonSound, gameOver;
 	private float deltaTime;
 	
 	private int screenHeight, screenWidth;
@@ -103,15 +107,13 @@ public class Controller {
 	
 	private void initRedFighter(){
 		RedFighter red = new RedFighter();
-		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
-		s.play();
+		redSummonSound.play();
 		drawableObjects.add(red);
 	}
 	
 	private void initSmallFighter(){
 		SmallFighter small = new SmallFighter();
-		Sound s = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
-		s.play();
+		smallSummonSound.play();
 		drawableObjects.add(small);
 	}
 	private void initBarriers(){
@@ -166,6 +168,7 @@ public class Controller {
 					((Base) gObj).update(deltaTime);
 					if(BaseHit == true){
 						drawableObjects.remove((Base) gObj);
+						gameOver.play();
 						explode.play(1.0f);		//Game over if base is hit
 	
 					}
@@ -176,6 +179,7 @@ public class Controller {
 						
 						if(gObj.sprite.getBoundingRectangle().contains(getMouseX(), getMouseY())){
 							((AlienShip) gObj).addHit();
+							explode.play(0.15f);
 						}
 						
 						if(base.sprite.getBoundingRectangle().overlaps(((AlienShip) gObj)
@@ -341,6 +345,12 @@ public class Controller {
 		explode = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/Bomb_Exploding-Sound_Explorer-68256487.mp3"));
 		laser = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pew.wav"));
 		ufo = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/alien ufo loop.wav"));
+		backgroundRadiation = Gdx.audio.newMusic(Gdx.files.internal("sounds/sfx/ambientbackground.mp3"));
+		backgroundRadiation.setLooping(true);
+		backgroundRadiation.play();
+		redSummonSound = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/redSummon.wav"));
+		smallSummonSound = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/smallSummon.wav"));
+		gameOver = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/gameover.mp3"));
 	}
 	
 	public void dispose(){
@@ -352,6 +362,24 @@ public class Controller {
 		*/
 		if (this.explode != null) {
 			explode.dispose();
+		}
+		if (this.laser != null) {
+			laser.dispose();
+		}
+		if (this.ufo != null) {
+			ufo.dispose();
+		}
+		if (this.backgroundRadiation != null) {
+			backgroundRadiation.dispose();
+		}
+		if (this.redSummonSound != null) {
+			redSummonSound.dispose();
+		}
+		if (this.smallSummonSound != null) {
+			smallSummonSound.dispose();
+		}
+		if (this.gameOver != null) {
+			gameOver.dispose();
 		}
 	}
 	
